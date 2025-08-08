@@ -17,6 +17,100 @@
 - AWS 帳號（用於部署 bedrock-chat API）
 - Telegram 帳號（用於創建機器人）
 
+## �️ 系統架構流
+
+```mermaid
+graph TB
+    subgraph "用戶端"
+        U[👤 Telegram 用戶]
+    end
+    
+    subgraph "Telegram 平台"
+        TB[🤖 Telegram Bot]
+        TBA[📡 Telegram Bot API]
+    end
+    
+    subgraph "本地/伺服器環境"
+        APP[🐍 Python Bot 應用程式<br/>main.py]
+        CONFIG[⚙️ 環境配置<br/>.env]
+    end
+    
+    subgraph "AWS 雲端服務"
+        subgraph "bedrock-chat API"
+            APIGW[🌐 API Gateway]
+            LAMBDA[⚡ Lambda Function]
+            BEDROCK[🧠 Amazon Bedrock<br/>Claude 3.5 Haiku]
+        end
+        
+        subgraph "其他 AWS 服務"
+            LOGS[📊 CloudWatch Logs]
+            IAM[🔐 IAM Roles]
+        end
+    end
+    
+    %% 用戶互動流程
+    U -->|1. 發送訊息| TB
+    TB -->|2. Webhook/Polling| TBA
+    TBA -->|3. 接收訊息| APP
+    
+    %% 授權檢查
+    APP -->|4. 檢查用戶授權| CONFIG
+    
+    %% API 呼叫流程
+    APP -->|5. HTTP POST /chat| APIGW
+    APIGW -->|6. 觸發| LAMBDA
+    LAMBDA -->|7. 呼叫 AI 模型| BEDROCK
+    BEDROCK -->|8. AI 回應| LAMBDA
+    LAMBDA -->|9. 回傳結果| APIGW
+    APIGW -->|10. JSON 回應| APP
+    
+    %% 回應用戶
+    APP -->|11. 格式化回應| TBA
+    TBA -->|12. 發送回應| TB
+    TB -->|13. 顯示回應| U
+    
+    %% 日誌記錄
+    APP -.->|記錄日誌| LOGS
+    LAMBDA -.->|記錄日誌| LOGS
+    
+    %% 權限管理
+    LAMBDA -.->|使用角色| IAM
+    
+    %% 樣式設定
+    classDef userClass fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef telegramClass fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef appClass fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef awsClass fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef aiClass fill:#fff8e1,stroke:#f57f17,stroke-width:3px
+    
+    class U userClass
+    class TB,TBA telegramClass
+    class APP,CONFIG appClass
+    class APIGW,LAMBDA,LOGS,IAM awsClass
+    class BEDROCK aiClass
+```
+
+### 架構說明
+
+1. **用戶互動層**
+   - 用戶透過 Telegram 應用程式與機器人對話
+   - 支援文字訊息的雙向溝通
+
+2. **機器人應用層**
+   - Python 應用程式處理 Telegram Bot API 的訊息
+   - 實作用戶授權、訊息處理和錯誤處理
+   - 透過環境變數進行配置管理
+
+3. **AWS 服務層**
+   - **API Gateway**: 提供 RESTful API 端點
+   - **Lambda**: 處理聊天請求的無伺服器運算
+   - **Bedrock**: 提供 Claude 3.5 Haiku AI 模型服務
+   - **CloudWatch**: 記錄和監控系統運行狀態
+
+4. **資料流程**
+   - 用戶訊息 → Telegram → Bot 應用程式 → AWS API → AI 模型 → 回應用戶
+   - 完整的請求-回應週期，包含授權驗證和錯誤處理
+
 ## 🏗️ 完整部署流程
 
 ### 第一步：部署 AWS Bedrock Chat API
