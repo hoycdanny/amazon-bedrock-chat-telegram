@@ -250,9 +250,9 @@ python main.py
 |--------|------|------|------|----------|
 | `TELEGRAM_BOT_TOKEN` | ✅ | Telegram Bot 的認證 Token | `1234567890:ABCdefGHIjklMNOpqrsTUVwxyz` | 從 [@BotFather](https://t.me/BotFather) 創建機器人時獲得 |
 | `BEDROCK_CHAT_API_URL` | ✅ | Bedrock Chat API 的端點 URL | `https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/prod` | 從 bedrock-chat CDK 部署輸出獲得 |
-| `BEDROCK_CHAT_API_TOKEN` | ❌ | API 認證 Token（通常留空） | `your-api-token` | 如果 API 需要額外認證才填入 |
+| `BEDROCK_CHAT_API_TOKEN` | ✅ | API 認證 Token | `your-api-token` | 填入Publish API Token |
 | `BEDROCK_CHAT_TIMEOUT` | ❌ | API 請求超時時間（秒） | `30` | 根據需要調整，預設 30 秒 |
-| `AUTHORIZED_USERS` | ❌ | 授權用戶 ID 列表（逗號分隔） | `123456789,987654321` | 從 [@getidsbot](https://t.me/getidsbot) 獲得用戶 ID |
+| `AUTHORIZED_USERS` | ✅ | 授權用戶 ID 列表 | `123456789` | 從 [@getidsbot](https://t.me/getidsbot) 獲得用戶 ID |
 | `LOG_LEVEL` | ❌ | 日誌級別 | `INFO` | 可選：DEBUG, INFO, WARNING, ERROR |
 
 ### 授權設定
