@@ -1,10 +1,10 @@
 # Telegram Bedrock Chat Bot
 
-一個整合了 AWS Bedrock Claude 3.5 Haiku 的 Telegram 聊天機器人，透過 [bedrock-chat](https://github.com/aws-samples/bedrock-chat) API 提供智能對話功能。
+一個整合了 AWS Bedrock 的 Telegram 聊天機器人，透過 [bedrock-chat](https://github.com/aws-samples/bedrock-chat) API 提供智能對話功能。
 
 ## 🚀 功能特色
 
-- **智能對話**: 使用 Claude 3.5 Haiku 模型提供高質量的 AI 回應
+- **智能對話**: 使用Bedrock提供高質量的 AI 回應
 - **即時回應**: 優化的輪詢機制，AI 完成回應後立即發送
 - **用戶授權**: 支持指定用戶授權使用
 - **打字指示器**: 處理過程中顯示打字狀態
@@ -233,7 +233,7 @@ python main.py
 
 ### 對話功能
 
-直接發送任何文字訊息給機器人，它會透過 AWS Bedrock Chat API 使用 Claude 3.5 Haiku 來回應你的問題。
+直接發送任何文字訊息給機器人，它會透過 AWS Bedrock Chat API 來回應你的問題。
 
 ### 使用流程
 
