@@ -17,34 +17,34 @@
 - AWS 帳號（用於部署 bedrock-chat API）
 - Telegram 帳號（用於創建機器人）
 
-## �️ 系統架構流
+## 系統架構
 
 ```mermaid
 graph TB
     subgraph "用戶端"
-        U[👤 Telegram 用戶]
+        U[Telegram 用戶]
     end
     
     subgraph "Telegram 平台"
-        TB[🤖 Telegram Bot]
-        TBA[📡 Telegram Bot API]
+        TB[Telegram Bot]
+        TBA[Telegram Bot API]
     end
     
     subgraph "本地/伺服器環境"
-        APP[🐍 Python Bot 應用程式<br/>main.py]
-        CONFIG[⚙️ 環境配置<br/>.env]
+        APP[ Python Bot 應用程式<br/>main.py]
+        CONFIG[ 環境配置<br/>.env]
     end
     
     subgraph "AWS 雲端服務"
         subgraph "bedrock-chat API"
-            APIGW[🌐 API Gateway]
-            LAMBDA[⚡ Lambda Function]
-            BEDROCK[🧠 Amazon Bedrock<br/>Claude 3.5 Haiku]
+            APIGW[API Gateway]
+            LAMBDA[Lambda Function]
+            BEDROCK[Amazon Bedrock]
         end
         
         subgraph "其他 AWS 服務"
-            LOGS[📊 CloudWatch Logs]
-            IAM[🔐 IAM Roles]
+            LOGS[CloudWatch Logs]
+            IAM[IAM Roles]
         end
     end
     
